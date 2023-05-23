@@ -32,11 +32,6 @@ namespace TimeMeasurer
 
         public void Dispose()
         {
-            if(stopwatch == null)
-            {
-                return;
-            }
-
             stopwatch.Stop();
             string loggingMessage = $"{_loggingMessage}: {stopwatch?.Elapsed.TotalSeconds}";
             _logger.LogInformation(loggingMessage);
