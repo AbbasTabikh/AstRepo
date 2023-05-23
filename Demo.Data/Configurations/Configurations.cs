@@ -43,6 +43,22 @@ namespace Demo.Data.Configurations
             });
         }
 
+        public static void ConfigureMunicipality(this ModelBuilder builder)
+        {
+            builder.Entity<Municipality>(entity =>
+            {
+                entity.HasKey(p => p.Id);
+
+                entity.Property(p => p.ArabicName)
+                      .HasMaxLength(50)
+                      .IsRequired();
+
+
+                entity.Property(p => p.EnglishName)
+                      .HasMaxLength(50)
+                      .IsRequired();
+            });
+        }
 
         //Many to Many
         public static void ConfigureUserRole(this ModelBuilder builder)

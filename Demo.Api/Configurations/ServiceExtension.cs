@@ -34,6 +34,7 @@ namespace Demo.Api.Configurations
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<ITaskService, TaskService>();
+            services.AddScoped<IMunicipalityService, MunicipalityService>();
             return services;
         }
         public static IServiceCollection AddIdentityCore(this IServiceCollection services)

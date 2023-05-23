@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Demo.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230510110823_SeedRoles")]
-    partial class SeedRoles
+    [Migration("20230523120956_AddMunicipality")]
+    partial class AddMunicipality
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -55,13 +55,13 @@ namespace Demo.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("1b3b7a9d-c649-47f7-b1e6-a0f94326b5f7"),
+                            Id = new Guid("40de6547-e404-4c30-944f-85c15d27a204"),
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = new Guid("7ddd85a8-5e1d-4f9b-8092-23d8b14a2480"),
+                            Id = new Guid("adb349e9-e268-487a-8ea9-e05a12a894c9"),
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -131,6 +131,21 @@ namespace Demo.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("a7814749-fabf-4686-94c0-f871650aa29b"),
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "453b3336-d73d-4204-839d-3f1b1b83d75b",
+                            Email = "Admin@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            PasswordHash = "AQAAAAIAAYagAAAAEHgkEVcedklvEtg3FAZV88iW0gySEKjpsaa0xVVpGl4HTRDj9iL+8Ya4ULS0AuogdA==",
+                            PhoneNumberConfirmed = false,
+                            TwoFactorEnabled = false,
+                            UserName = "adminUser"
+                        });
                 });
 
             modelBuilder.Entity("Demo.Data.Models.ApplicationUserRole", b =>
@@ -146,6 +161,182 @@ namespace Demo.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = new Guid("a7814749-fabf-4686-94c0-f871650aa29b"),
+                            RoleId = new Guid("40de6547-e404-4c30-944f-85c15d27a204")
+                        });
+                });
+
+            modelBuilder.Entity("Demo.Data.Models.Municipality", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ArabicName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("EnglishName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Municipalities");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ArabicName = "بعبدا",
+                            EnglishName = "Baabda"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ArabicName = "عبودية",
+                            EnglishName = "Abboudieh"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ArabicName = "بعلبك",
+                            EnglishName = "Baalbeck"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ArabicName = "بريتال",
+                            EnglishName = "Brital"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            ArabicName = "دورس",
+                            EnglishName = "Douris"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            ArabicName = "شارون",
+                            EnglishName = "Charoun"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            ArabicName = "شرتون",
+                            EnglishName = "Chartoun"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            ArabicName = "كفرمتى",
+                            EnglishName = "Kfarmatta"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            ArabicName = "صوفر",
+                            EnglishName = "Saoufar"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            ArabicName = "عبادية",
+                            EnglishName = "Abadiyeh"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            ArabicName = "زفتا",
+                            EnglishName = "Zefta"
+                        });
+                });
+
+            modelBuilder.Entity("Demo.Data.Models.Project", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<byte[]>("Image")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Projects");
+                });
+
+            modelBuilder.Entity("Demo.Data.Models.ProjectTask", b =>
+                {
+                    b.Property<Guid>("TaskId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("TaskId", "ProjectId");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("ProjectTasks");
+                });
+
+            modelBuilder.Entity("Demo.Data.Models.ProjectUser", b =>
+                {
+                    b.Property<Guid>("ProjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ProjectId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ProjectUser");
+                });
+
+            modelBuilder.Entity("Demo.Data.Models.Task", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<byte>("Status")
+                        .HasColumnType("tinyint");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tasks");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -255,6 +446,44 @@ namespace Demo.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Demo.Data.Models.ProjectTask", b =>
+                {
+                    b.HasOne("Demo.Data.Models.Project", "Project")
+                        .WithMany("ProjectTasks")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Demo.Data.Models.Task", "Task")
+                        .WithMany("ProjectTasks")
+                        .HasForeignKey("TaskId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Project");
+
+                    b.Navigation("Task");
+                });
+
+            modelBuilder.Entity("Demo.Data.Models.ProjectUser", b =>
+                {
+                    b.HasOne("Demo.Data.Models.Project", "Project")
+                        .WithMany("ProjectUsers")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Demo.Data.Models.ApplicationUser", "User")
+                        .WithMany("ProjectUsers")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Project");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.HasOne("Demo.Data.Models.ApplicationRole", null)
@@ -298,7 +527,21 @@ namespace Demo.Data.Migrations
 
             modelBuilder.Entity("Demo.Data.Models.ApplicationUser", b =>
                 {
+                    b.Navigation("ProjectUsers");
+
                     b.Navigation("UserRoles");
+                });
+
+            modelBuilder.Entity("Demo.Data.Models.Project", b =>
+                {
+                    b.Navigation("ProjectTasks");
+
+                    b.Navigation("ProjectUsers");
+                });
+
+            modelBuilder.Entity("Demo.Data.Models.Task", b =>
+                {
+                    b.Navigation("ProjectTasks");
                 });
 #pragma warning restore 612, 618
         }

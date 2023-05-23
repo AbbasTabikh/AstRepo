@@ -132,13 +132,13 @@ namespace Demo.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("0b0dd23b-6fc4-4361-9873-b3ade8eef194"),
+                            Id = new Guid("a7814749-fabf-4686-94c0-f871650aa29b"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "5e318b5e-875c-48dc-923a-5c10012bd5b2",
+                            ConcurrencyStamp = "453b3336-d73d-4204-839d-3f1b1b83d75b",
                             Email = "Admin@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEJo44iYMV1Kqo8agJXZ391a5bYfGn8aQcvEmMx5xZKD0iqhDc9wE5y0c1F2DFsT+5g==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHgkEVcedklvEtg3FAZV88iW0gySEKjpsaa0xVVpGl4HTRDj9iL+8Ya4ULS0AuogdA==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "adminUser"
@@ -162,8 +162,99 @@ namespace Demo.Data.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = new Guid("0b0dd23b-6fc4-4361-9873-b3ade8eef194"),
+                            UserId = new Guid("a7814749-fabf-4686-94c0-f871650aa29b"),
                             RoleId = new Guid("40de6547-e404-4c30-944f-85c15d27a204")
+                        });
+                });
+
+            modelBuilder.Entity("Demo.Data.Models.Municipality", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ArabicName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("EnglishName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Municipalities");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ArabicName = "بعبدا",
+                            EnglishName = "Baabda"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ArabicName = "عبودية",
+                            EnglishName = "Abboudieh"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ArabicName = "بعلبك",
+                            EnglishName = "Baalbeck"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ArabicName = "بريتال",
+                            EnglishName = "Brital"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            ArabicName = "دورس",
+                            EnglishName = "Douris"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            ArabicName = "شارون",
+                            EnglishName = "Charoun"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            ArabicName = "شرتون",
+                            EnglishName = "Chartoun"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            ArabicName = "كفرمتى",
+                            EnglishName = "Kfarmatta"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            ArabicName = "صوفر",
+                            EnglishName = "Saoufar"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            ArabicName = "عبادية",
+                            EnglishName = "Abadiyeh"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            ArabicName = "زفتا",
+                            EnglishName = "Zefta"
                         });
                 });
 

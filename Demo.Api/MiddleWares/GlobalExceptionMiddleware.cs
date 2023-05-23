@@ -25,7 +25,7 @@ namespace Demo.Api.ExceptionMiddleware
             }
             catch (Exception exception)
             {
-                _logger.LogError($"An error occured : {exception}");
+                _logger.LogError($"An error occured : {exception.Message}");
                 await HandleExceptionAsync(context, exception);
             }
         }

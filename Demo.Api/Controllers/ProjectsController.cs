@@ -17,12 +17,20 @@ namespace Demo.Api.Controllers
         private readonly IProjectService _projectService;
         private readonly ILogger<ProjectsController> _logger;
         private readonly ITimeMeasurerFactory _timeMeasurer;
+        private IProjectService projectService;
+        private ILogger<ProjectsController> fakeLogger;
 
         public ProjectsController(IProjectService projectService , ILogger<ProjectsController> logger , ITimeMeasurerFactory timeMeasurer)
         {
             _projectService = projectService;
             _logger = logger;
             _timeMeasurer = timeMeasurer;
+        }
+
+        public ProjectsController(IProjectService projectService, ILogger<ProjectsController> fakeLogger)
+        {
+            this.projectService = projectService;
+            this.fakeLogger = fakeLogger;
         }
 
         [HttpGet("{id}")]

@@ -18,6 +18,7 @@ namespace Demo.Data.Data
         public DbSet<Models.Task> Tasks  { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<ProjectTask> ProjectTasks { get; set; }
+        public DbSet<Municipality> Municipalities { get; set; }
 
         public DataContext(DbContextOptions<DataContext> dbContextOptions) : base(dbContextOptions) 
         {
@@ -29,6 +30,7 @@ namespace Demo.Data.Data
             base.OnModelCreating(builder);
 
 
+            builder.ConfigureMunicipality();
             builder.ConfigureProject();
             builder.ConfigureTask();
             builder.ConfigureUserRole();
@@ -38,7 +40,7 @@ namespace Demo.Data.Data
             // Roles must be seeded  before users (due to UserRoles Relationship)
             builder.SeedRoles();
             builder.SeedUsers();
-
+            builder.SeedMunicipalities();
 
 
         }
