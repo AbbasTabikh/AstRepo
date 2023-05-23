@@ -6,17 +6,18 @@ namespace TimeMeasurer
     public class TimeMeasurer : IDisposable
     {
         private readonly ILogger _logger;
-        private Stopwatch? stopwatch;
+        private readonly Stopwatch stopwatch;
 
 
-        private string _loggingMessage = string.Empty;
+        private string _loggingMessage = "Time Elapsed :";
         public string LogginMessage
         {
-            get { return _loggingMessage; }
-            set 
-            { 
-                _loggingMessage = value;
-                stopwatch!.Restart();
+            private get => _loggingMessage;
+            set
+            {
+                stopwatch.Stop();
+                  _loggingMessage = value;
+                stopwatch.Start();
             }
         }
 
@@ -26,8 +27,7 @@ namespace TimeMeasurer
         public TimeMeasurer(ILogger logger)
         {
             _logger = logger;
-
-            Start();
+            stopwatch = Stopwatch.StartNew();
         }
 
         public void Dispose()
@@ -40,11 +40,6 @@ namespace TimeMeasurer
             stopwatch.Stop();
             string loggingMessage = $"{_loggingMessage}: {stopwatch?.Elapsed.TotalSeconds}";
             _logger.LogInformation(loggingMessage);
-        }
-
-        private void Start()
-        {
-            stopwatch = Stopwatch.StartNew();
         }
 
     }
