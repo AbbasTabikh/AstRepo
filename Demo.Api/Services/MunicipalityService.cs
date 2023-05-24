@@ -25,14 +25,12 @@ namespace Demo.Api.Services
             }
 
 
-            IEnumerable<string> choices = null;
+            IEnumerable<string> choices = Enumerable.Empty<string>();
+            bool isInEnglsih = name.IsEnglish();
 
-            bool isInEnglsih = false;
-
-            if (name.IsEnglish())
+            if (isInEnglsih)
             {
                 choices = await _dataContext.Municipalities.Select(x => x.EnglishName).ToArrayAsync(cancellationToken);
-                isInEnglsih = true;
             }
 
             //Arabic
@@ -41,9 +39,10 @@ namespace Demo.Api.Services
                 choices = await _dataContext.Municipalities.Select(x => x.ArabicName).ToArrayAsync(cancellationToken);
             }
 
-            var result = Process.ExtractTop(name, choices, null, null, 15, 50);
+            var result = Process.ExtractTop(name, choices, null, null, 15, 75);
             var matchedOptions = result.Select(r => r.Value).ToArray();
             var resultQuery = Array.Empty<Municipality>();
+
 
             if(isInEnglsih)
             {

@@ -1,6 +1,7 @@
 ﻿using Demo.Api.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Text;
 
 namespace Demo.Api.Controllers
 {
@@ -15,9 +16,11 @@ namespace Demo.Api.Controllers
             _municipalityService = municipalityService;
         }
 
-        [HttpGet]
+        [HttpGet("{name}")]
         public async Task<IActionResult> SearchByName(string name , CancellationToken cancellationToken)
         {
+            //var httpContent = new StringContent(name, Encoding.UTF8, "text/plain");
+
             var result = await _municipalityService.SearchByNameAsync(name, cancellationToken);
 
             return Ok(result);
