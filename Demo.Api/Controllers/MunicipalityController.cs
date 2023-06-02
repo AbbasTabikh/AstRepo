@@ -19,12 +19,8 @@ namespace Demo.Api.Controllers
         [HttpGet("{name}")]
         public async Task<IActionResult> SearchByName(string name , CancellationToken cancellationToken)
         {
-            //var httpContent = new StringContent(name, Encoding.UTF8, "text/plain");
-
             var result = await _municipalityService.SearchByNameAsync(name, cancellationToken);
-
             return Ok(result);
-
         }
     }
 }

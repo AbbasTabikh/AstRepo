@@ -29,6 +29,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Demo.Data\Demo.Data.csproj" />
+    <ProjectReference Include="..\Demo.Utils\Demo.Utils.csproj" />
     <ProjectReference Include="..\TimeManagerService\Demo.TimeRecorder.csproj" />
     <ProjectReference Include="..\TimeMeasurer\TimeMeasurer.csproj" />
   </ItemGroup>

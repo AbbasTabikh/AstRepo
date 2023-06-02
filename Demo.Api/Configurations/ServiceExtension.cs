@@ -1,6 +1,8 @@
 ﻿using Demo.Api.Services;
+using Demo.Data.Configurations;
 using Demo.Data.Data;
 using Demo.Data.Models;
+using Demo.Utils.RecaptchaV3;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
@@ -28,13 +30,19 @@ namespace Demo.Api.Configurations
 
             return services;
         }
-        public static IServiceCollection AddServices(this IServiceCollection services)
+        public static IServiceCollection AddServices(this IServiceCollection services , IConfiguration configurations)
         {
             services.AddScoped<SignInManager<ApplicationUser>>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<ITaskService, TaskService>();
             services.AddScoped<IMunicipalityService, MunicipalityService>();
+
+
+            services.AddSingleton(GetRecaptchaConfiguration(configurations.GetSection(nameof(RecaptchaConfiguration))));
+            //services.AddScoped<RecaptchaConfiguration , RecaptchaConfiguration>();
+            services.AddScoped<IRecaptchaService, RecaptchaService>();
+
             return services;
         }
         public static IServiceCollection AddIdentityCore(this IServiceCollection services)
@@ -84,6 +92,15 @@ namespace Demo.Api.Configurations
             });
 
             return services;
+        }
+
+
+
+        private static RecaptchaConfiguration GetRecaptchaConfiguration(IConfigurationSection configurationSection)
+        {
+            var secretKey = configurationSection["RecaptchaSecretKey"];
+            var url = configurationSection["RecaptchaVerificationURL"];
+            return new RecaptchaConfiguration(secretKey, url);
         }
     }
 }

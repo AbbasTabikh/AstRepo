@@ -5,7 +5,7 @@ using NLog;
 using NLog.Web;
 using Demo.TimeRecorder.Extension;
 using TimeMeasurer.Extension;
-
+using Demo.Utils.RecaptchaV3;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,7 +23,7 @@ builder.Services.AddSwagger();
 builder.Services.AddDemoDb(builder.Configuration);
 builder.Services.AddIdentityCore();
 builder.Services.AddJwt(builder.Configuration);
-builder.Services.AddServices();
+builder.Services.AddServices(builder.Configuration);
 
 builder.Services.AddTimeRecorder();
 builder.Services.AddTimeMeasurerFactory();
@@ -51,6 +51,7 @@ app.UseHttpsRedirection();
     
 app.UseAuthorization();
 
+app.UseRecaptchaMiddleware();
 app.UseMiddleware<GlobalExceptionMiddleware>();
 
 app.MapControllers();

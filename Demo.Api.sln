@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.TimeRecorder", "TimeMa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.Testing", "Demo.Testting\Demo.Testing.csproj", "{32F61816-1249-4030-A33B-9D871DD4D336}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeMeasurer", "TimeMeasurer\TimeMeasurer.csproj", "{5377BCF9-36D2-4873-9085-6601B8E86697}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeMeasurer", "TimeMeasurer\TimeMeasurer.csproj", "{5377BCF9-36D2-4873-9085-6601B8E86697}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.Utils", "Demo.Utils\Demo.Utils.csproj", "{BB059CFC-2DCD-450F-BF3F-7E681D6B8FCC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{5377BCF9-36D2-4873-9085-6601B8E86697}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5377BCF9-36D2-4873-9085-6601B8E86697}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5377BCF9-36D2-4873-9085-6601B8E86697}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB059CFC-2DCD-450F-BF3F-7E681D6B8FCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB059CFC-2DCD-450F-BF3F-7E681D6B8FCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB059CFC-2DCD-450F-BF3F-7E681D6B8FCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB059CFC-2DCD-450F-BF3F-7E681D6B8FCC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

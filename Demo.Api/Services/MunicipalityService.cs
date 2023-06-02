@@ -2,8 +2,8 @@
 using Demo.Data.Data;
 using Demo.Data.Models;
 using FuzzySharp;
-using FuzzySharp.SimilarityRatio.Scorer;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Immutable;
 
 namespace Demo.Api.Services
 {
@@ -18,6 +18,7 @@ namespace Demo.Api.Services
 
         public async Task<IEnumerable<Municipality>> SearchByNameAsync(string name , CancellationToken cancellationToken)
         {
+            name = name.Trim();
 
             if(string.IsNullOrEmpty(name))
             {
@@ -25,42 +26,37 @@ namespace Demo.Api.Services
             }
 
 
-            IEnumerable<string> choices = Enumerable.Empty<string>();
             bool isInEnglsih = name.IsEnglish();
 
             if (isInEnglsih)
             {
-                choices = await _dataContext.Municipalities.Select(x => x.EnglishName).ToArrayAsync(cancellationToken);
+                //get all the municipalities
+                IEnumerable<Municipality> municipalities = await _dataContext.Municipalities
+                                                                             .AsNoTracking()
+                                                                             .ToArrayAsync(cancellationToken);
+                
+                IEnumerable<string> choices = municipalities.Select(x => x.EnglishName).ToArray();
+
+                var result = Process.ExtractTop(name, choices, cutoff: 66);
+
+                //get the matched strings from result
+                var matchedOptions = result.Select(r => r.Value)
+                                           .ToHashSet();
+
+                //fetch the result
+                var resultQuery = municipalities.Where(e => matchedOptions.Contains(e.EnglishName))
+                                                .ToArray();
+
+                return resultQuery;
             }
 
             //Arabic
-            else
-            {
-                choices = await _dataContext.Municipalities.Select(x => x.ArabicName).ToArrayAsync(cancellationToken);
-            }
-
-            var result = Process.ExtractTop(name, choices, null, null, 15, 75);
-            var matchedOptions = result.Select(r => r.Value).ToArray();
-            var resultQuery = Array.Empty<Municipality>();
-
-
-            if(isInEnglsih)
-            {
-               resultQuery = _dataContext.Municipalities
-                                         .Where(e => matchedOptions.Contains(e.EnglishName))
-                                         .ToArray();
-            }
-
-            else
-            {
-              resultQuery = _dataContext.Municipalities
-                                        .Where(e => matchedOptions.Contains(e.ArabicName))
-                                        .ToArray();
-            }
-
-
-            return resultQuery;
-
+             return _dataContext.Municipalities
+                                .AsNoTracking()
+                                .AsEnumerable()
+                                .Where(x => Levenshtein.GetRatio(name, x.ArabicName) >= 0.6666)
+                                .ToArray();
+            
         }
 
 
