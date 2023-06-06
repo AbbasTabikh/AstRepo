@@ -53,6 +53,7 @@ namespace Demo.Api.Services
                                 .Where(x => Levenshtein.GetRatio(name, x.ArabicName) >= 0.6666)
                                 .ToArray();
             //sms test
+            //gijdfgeijprgjipernigeringieripernigernigniergnieringenini
         }
 
 
