@@ -36,20 +36,16 @@ namespace Demo.Api.Services
                                                                              .ToArrayAsync(cancellationToken);
                 
                 IEnumerable<string> choices = municipalities.Select(x => x.EnglishName).ToArray();
-
                 var result = Process.ExtractTop(name, choices, cutoff: 66);
 
                 //get the matched strings from result
                 var matchedOptions = result.Select(r => r.Value)
                                            .ToHashSet();
-
                 //fetch the result
                 var resultQuery = municipalities.Where(e => matchedOptions.Contains(e.EnglishName))
                                                 .ToArray();
-
                 return resultQuery;
             }
-
             //Arabic
              return _dataContext.Municipalities
                                 .AsNoTracking()
